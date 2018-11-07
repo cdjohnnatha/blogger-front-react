@@ -1,0 +1,20 @@
+/* .card-img-top {
+  width: 115%;
+/* } */
+
+.card__styles {
+  width: 18rem;
+}
+
+.secondary__image {
+  width: 7em;
+  height: 6em;
+}
+
+.secondary__news{
+  margin-left: 1em;
+}
+
+.secondary__news__content {
+  margin-left: 0.5em;
+}
