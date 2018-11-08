@@ -21,22 +21,23 @@ class CardNews extends Component {
       }
     ];
     return (
-      <div className="container d-flex">
-        <div className="card card__styles">
+      <div className="d-flex">
+        <div className="card card__styles p-2">
           <img className="card-img-top" src={data[0].img_data} alt="Card image cap" />
           <div className="card-body card__body_style">
             <p className="card-text">{data[0].bodyText}</p>
           </div>
         </div>
-        <div className="d-flex flex-column bd-highlight secondary__news">
-          <div className="d-flex flex-row mb-1">
+        <div className="d-flex card flex-column bd-highlight secondary__news flex-grow-2  p-2">
+          <div className="d-flex card align-items-center flex-row mb-1">
             <img src={data[1].img_data} alt="..." className="rounded float-left secondary__image" />
-            <div className="d-flex flex-column secondary__news__content justify-content-start">
-              <p className="font-weight-bold">{data[1].title}</p>
-              <p className="text-secondary">
+            <div className="d-flex align-items-start flex-column secondary__news__content justify-content-start">
+              <div className="font-weight-bold">{data[1].title}</div>
+              <div>{data[1].bodyText}</div>
+              <div className="text-secondary">
                 <FontAwesomeIcon icon={faCalendarAlt} />
                 {data[1].date}
-              </p>
+              </div>
             </div>
           </div>
         </div>
