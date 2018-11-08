@@ -1,14 +1,14 @@
-# blogger-front-react, "we have a problem"
+# blogger-front-react
 A simple blog created in react. Below you can check the wireframes created by Claudio to create the application.
 
 ## Index page
 
-![alt text](http://url/to/img.png)
+![Index](https://github.com/cdjohnnatha/blogger-front-react/blob/master/public/assets/images/index.png)
 
 ## Login page.
 
-![alt text](http://url/to/img.png)
+![login](https://github.com/cdjohnnatha/blogger-front-react/blob/master/public/assets/images/login.png)
 
 ## Page for read texts.
 
-![alt text](http://url/to/img.png)
+![page2](https://github.com/cdjohnnatha/blogger-front-react/blob/master/public/assets/images/page2.png)
