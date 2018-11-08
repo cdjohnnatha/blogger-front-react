@@ -5,20 +5,32 @@ import Toolbar from './components/Toolbar/Toolbar';
 import Carousel from './components/Carousel/Carousel';
 import CardNews from './components/CardNews/CardNews';
 import Footer from './components/Footer/Footer';
+import { BrowserRouter, Route } from 'react-router-dom';
+
+
+const index = () => {
+  return (
+    <div className="App">
+      <Toolbar />
+      <div className="container">
+        <Carousel />
+        <article className="d-flex">
+          <CardNews/>
+        </article>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Toolbar />
-        <div className="container">
-          <Carousel />
-          <article className="d-flex">
-            <CardNews/>
-          </article>
-        </div>
-        <Footer />
-      </div>
+      <BrowserRouter>
+        <Route path="/" component={index} />
+        {/* <Route path="/login" component={Login} /> */}
+      </BrowserRouter>
     );
   }
 }
