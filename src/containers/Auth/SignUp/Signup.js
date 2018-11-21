@@ -6,7 +6,7 @@ import { updateObject } from "../../shared/utility";
 import { Redirect } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
-class Auth extends Component {
+class signup extends Component {
     state = {
       controls: {
         password: {
@@ -81,7 +81,7 @@ class Auth extends Component {
         </Form>
         <div>
           <small>Don't have an account ?
-            <Link className="navbar-text" to="/sign_up/">
+            <Link className="navbar-text" to="/login/">
               REGISTER HERE
             </Link>
           </small>
@@ -108,4 +108,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(mapStatToProps, mapDispatchToProps)(Auth);;
+export default connect(mapStatToProps, mapDispatchToProps)(signup);;

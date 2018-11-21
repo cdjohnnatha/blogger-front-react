@@ -30,7 +30,7 @@ export const logout = () => {
   localStorage.removeItem('access-token');
   localStorage.removeItem('uid');
   localStorage.removeItem('client');
-  localStorage.removeItem('expiration');
+  localStorage.removeItem('expiry');
   return { type: AUTH_LOGOUT }
 }
 
@@ -59,6 +59,7 @@ export const auth = (email, password) => {
       'Accept': 'application/json'
     }
     axios.defaults.httpAgent = agent;
+
     axios.post(url, authData)
       .then(response => {
         const { uid, client, expiry } = response.headers

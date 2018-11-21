@@ -1,11 +1,10 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { Link } from "react-router-dom";
 import './Toolbar.css';
-import Login from '../Login/Login';
+import NavigationItems from '../../Navigation/NavigationItems/NavigationItems';
 
 const toolbar = props => (
   <header>
@@ -18,19 +17,20 @@ const toolbar = props => (
           <span class="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav  d-flex">
-            <li className="nav-item">
-              <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-            </li>
-            <li className="nav-item">
-              <a class="nav-link" href="#">Blog</a>
-            </li>
-          </ul>
+          <NavigationItems></NavigationItems>
         </div>
-        <Link className="navbar-text" to="/login/">
-          <FontAwesomeIcon icon={faSignInAlt} />
-          Login
-        </Link>
+        {!props.isAuth
+          ?
+          <Link className="navbar-text" to="/login/">
+            <FontAwesomeIcon icon={faSignInAlt} />
+            Login
+          </Link>
+          :
+          <Link className="navbar-text" to="/logout/">
+            <FontAwesomeIcon icon={faSignOutAlt} />
+            Logout
+          </Link>
+        }
     </nav>
   </header>
 );
