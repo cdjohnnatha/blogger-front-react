@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css';
 
-const footer = props => (
+const footer = () => (
   <footer className="footer-classic font-small bg-light footer__component text-center ">
     <div className="footer-copyright py-3">
       © 2018 Claudio Djohnnatha:
