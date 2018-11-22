@@ -9,6 +9,8 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
     "dotenv": "^6.1.0",
+    "moment": "^2.22.2",
+    "nuka-carousel": "^4.4.3",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.1",

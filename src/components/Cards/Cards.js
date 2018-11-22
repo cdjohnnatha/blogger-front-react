@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './CardNews.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
+import LargeCard from './LargeCard/LargeCard'
+import SmallCardList from './CardsList/CardList';
 
 class CardNews extends Component {
   render() {
@@ -27,29 +27,8 @@ class CardNews extends Component {
     ];
     return (
       <div className="d-flex">
-        <div className="card card__styles">
-          <img className="card-img-top" src={data[0].img_data} alt="Card image cap" />
-          <div className="card-body card__body_style">
-            <p className="card-text">{data[0].bodyText}</p>
-          </div>
-        </div>
-        <ul className="d-flex card flex-column bd-highlight secondary__news flex-grow-2 nav nav-pills">
-        {data.map((item) => {
-          return (
-            <li className="d-flex card align-items-center flex-row mb-1 nav-item">
-              <img src={item.img_data} alt="..." className="rounded float-left secondary__image" />
-              <div className="d-flex align-items-start flex-column secondary__news__content justify-content-start">
-                <div className="font-weight-bold">{item.title}</div>
-                <div>{item.bodyText}</div>
-                <div className="text-secondary">
-                  <FontAwesomeIcon icon={faCalendarAlt} />
-                  {item.date}
-                </div>
-              </div>
-            </li>
-          );
-        })}
-        </ul>
+        <LargeCard largeContent="asdasdasdasdasd"></LargeCard>
+        <SmallCardList articlesList={data}></SmallCardList>
       </div>
     );
   }

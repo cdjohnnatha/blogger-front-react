@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Carousel from '../Carousel/Carousel';
-import CardNews from '../CardNews/CardNews';
+import Cards from '../Cards/Cards';
 
 
 class Index extends Component {
@@ -9,7 +9,7 @@ class Index extends Component {
       <div className="container">
         <Carousel />
         <article className="d-flex">
-          <CardNews/>
+          <Cards/>
         </article>
       </div>
     );
