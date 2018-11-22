@@ -61,7 +61,6 @@ const mapStatToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onShow: (id) => dispatch(showArticle(id)),
-    // onSetAuthRedirectPath: () => dispatch(setAuthRedirectPath('/login'))
   };
 }
 

@@ -6,10 +6,11 @@ import { INDEX_ARTICLE,
   ARTICLE_FAIL,
   SUCCESS_STATE,
   SET_ARTICLE_COMMENTS,
+  SET_ARTICLE_LIST
 } from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 import axios from 'axios';
-
+import { Deserializer } from 'jsonapi-serializer';
 const baseUrl = 'http://localhost:3001'
 
 export const articleFail = (error) => {
@@ -28,6 +29,35 @@ export const articleComments = (comments) => {
   return { type: SET_ARTICLE_COMMENTS, comments }
 }
 
+export const setArticleList = (articleList) => {
+  return { type: SET_ARTICLE_LIST, articleList }
+}
+
+export const indexArticle = () => {
+  return (dispatch, getState) => {
+    const { auth } = getState();
+    const url = `${baseUrl}/v1/articles`;
+    axios.defaults.headers = {
+      'Content-Type': 'application/vnd.api+json',
+      'Accept': 'application/vnd.api+json',
+      'token-type': auth.tokenType,
+      'client': auth.client,
+      'uid': auth.uid,
+      'access-token': auth.accessToken
+    }
+    axios.get(url).then(response => {
+      const { data: { data: dataList } } = response;
+      const list = dataList.map(element => ({
+        "id": element.id,
+        "attributes": element.attributes,
+      }));
+      dispatch(setArticleList(list));
+    })
+    .catch(error => {
+      dispatch(articleFail(error.response.data.error));
+    })
+  }
+}
 
 export const createArticle = (title, content) => {
   return (dispatch, getState) => {

@@ -3,10 +3,12 @@ import { INDEX_ARTICLE,
   DESTROY_ARTICLE,
   ARTICLE_GET_SUCCESS,
   SET_ARTICLE_COMMENTS,
+  SET_ARTICLE_LIST,
 } from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
 const initialState = {
+  list: [],
   title: null,
   content: null,
   lastUpdate: null,
@@ -17,7 +19,7 @@ const initialState = {
 }
 
 const index = (state, action) => {
-  // return updateObject(state, { error: null, loading: true });
+  return updateObject(state, { list: action.articleList });
 }
 
 
@@ -46,6 +48,8 @@ const articleComments = (state, action) => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case INDEX_ARTICLE:
+      return index(state, action);
+    case SET_ARTICLE_LIST:
       return index(state, action);
     case UPDATE_ARTICLE:
       return update(state, action);
