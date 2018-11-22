@@ -16,8 +16,8 @@ export const authStart = () => {
   return { type: AUTH_START }
 }
 
-export const authSuccess = (tokenType, accessToken, uid, client) => {
-  return { type: AUTH_SUCCESS, tokenType, accessToken, uid, client }
+export const authSuccess = (tokenType, accessToken, uid, client, userId) => {
+  return { type: AUTH_SUCCESS, tokenType, accessToken, uid, client, userId }
 }
 
 
@@ -62,7 +62,8 @@ export const auth = (email, password) => {
 
     axios.post(url, authData)
       .then(response => {
-        const { uid, client, expiry } = response.headers
+        const { uid, client, expiry } = response.headers;
+        const { data: {data: { id: userId } } } = response;
         const accessToken = response.headers['access-token'];
         const tokenType = response.headers['token-type']
         localStorage.setItem('tokenType', tokenType);
@@ -70,7 +71,8 @@ export const auth = (email, password) => {
         localStorage.setItem('uid', uid);
         localStorage.setItem('client', client);
         localStorage.setItem('expiry', expiry);
-        dispatch(authSuccess(tokenType, accessToken, uid, client))
+        localStorage.setItem('userId', userId);
+        dispatch(authSuccess(tokenType, accessToken, uid, client, userId))
         dispatch(checkAuthTimeout(expiry));
       })
       .catch(error => {
@@ -101,7 +103,8 @@ export const authCheckState = () => {
         const accessToken = localStorage.getItem('accessToken');
         const uid = localStorage.getItem('uid');
         const client = localStorage.getItem('client');
-        dispatch(authSuccess(tokenType, accessToken, uid, client));
+        const userId = localStorage.getItem('userId');
+        dispatch(authSuccess(tokenType, accessToken, uid, client, userId));
         dispatch(checkAuthTimeout((expirationTime.getTime() - new Date().getTime()) / 1000));
       }
     }

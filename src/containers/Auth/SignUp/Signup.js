@@ -53,7 +53,7 @@ class Signup extends Component {
 
   componentDidMount() {
     if (this.props.signupRedirectPath !== '/sign_up') {
-      this.props.onSetSignupRedirectPath();
+      this.props.onSetSignupRedirectPath('/login');
     }
   }
 
@@ -66,7 +66,6 @@ class Signup extends Component {
       this.state.controls.password.value,
       this.state.controls.password_confirmation.value
       );
-
   }
 
   inputChangedHandler = (event, controlName) => {
@@ -82,19 +81,19 @@ class Signup extends Component {
 
   render() {
     let errorMessage = null;
-    let singupRedirect = null;
+    let signupRedirect = null;
 
     if (this.props.error) {
-      errorMessage = <p>{this.props.error.message}</p>
+      let errors = this.props.error;
+      errorMessage = <ul>{Object.keys(errors).map(key => <li>{ `${key} - ${errors[key].join(', ')}`}</li>)}</ul>
     }
-    if (this.props.success) {
-      console.log(this.props.success);
-      singupRedirect = <Redirect to={this.props.singupRedirectPath} />
+    if (this.props.isSuccess) {
+      signupRedirect = <Redirect to={this.props.signupRedirectPath} />
     }
 
     return (
       <div className="container">
-        {singupRedirect}
+        {signupRedirect}
         {errorMessage}
         <Form className="border rounded" onSubmit={this.submitHandler}>
           <Row>
@@ -188,10 +187,10 @@ class Signup extends Component {
 }
 
 const mapStatToProps = state => {
-  console.log(state);
   return {
     loading: state.signup.loading,
     error: state.signup.error,
+    isSuccess: state.signup.success,
     signupRedirectPath: state.signup.signupRedirectPath
   };
 }

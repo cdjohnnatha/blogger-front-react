@@ -11,6 +11,7 @@ const initialState = {
   accessToken: null,
   uid: null,
   client: null,
+  userId: null,
   error: null,
   loading: false,
   authRedirectPath: '/'
@@ -26,6 +27,7 @@ const authSuccess = (state, action) => {
     accessToken: action.accessToken,
     uid: action.uid,
     client: action.client,
+    userId: action.userId,
     error: null,
     loading: false,
     authRedirectPath: '/'
