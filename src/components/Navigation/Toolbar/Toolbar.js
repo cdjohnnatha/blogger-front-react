@@ -23,7 +23,7 @@ const toolbar = props => (
           ?
           <Link className="navbar-text" to="/login/">
             <FontAwesomeIcon icon={faSignInAlt} />
-            Login
+            Login/Sign-up
           </Link>
           :
           <Link className="navbar-text" to="/logout/">

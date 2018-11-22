@@ -11,11 +11,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import authReducer from "./store/reducers/auth";
+import signUpReducer from "./store/reducers/signup";
 
 
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  signup: signUpReducer
 });
 
 const store = createStore(
