@@ -4,7 +4,8 @@ import { AUTH_START,
   AUTH_SUCCESS,
   AUTH_FAIL,
   AUTH_LOGOUT,
-  SET_AUTH_REDIRECT } from '../actions/actionTypes';
+  SET_AUTH_REDIRECT,
+ } from '../actions/actionTypes';
 
 const initialState = {
   tokenType: null,
@@ -48,7 +49,6 @@ const authLogout = (state, action) => {
 const setAuthRedirectPath = (state, action) => {
   return updateObject(state, { authRedirectPath: action.path });
 }
-
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {

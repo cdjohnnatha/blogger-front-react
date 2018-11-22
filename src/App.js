@@ -7,6 +7,7 @@ import Auth from './containers/Auth/Auth';
 import Signup from './containers/Auth/Signup/Signup';
 import Index from './components/Index/Index';
 import ArticleForm from './components/Articles/ArticleForm';
+import ArticleShow from './components/Articles/ArticleShow';
 import { connect } from "react-redux";
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
         <Route path="/" exact component={Index} />
         <Route path="/login" component={Auth} />
         <Route path="/sign_up" component={Signup} />
+        <Route path="/articles/:id" component={ArticleShow} />
         <Route path="/articles" component={ArticleForm} />
       </Switch>
     );
