@@ -1,7 +1,8 @@
 import {
   SUCCESS_STATE,
   SET_FAIL_STATE,
-  START_EDIT_COMMENT
+  START_EDIT_COMMENT,
+  CANCEL_EDIT_COMMENT
 } from "./actionTypes";
 import axios from 'axios';
 const baseUrl = 'http://localhost:3001'
@@ -16,6 +17,10 @@ export const setFailState = (error) => {
 
 export const startEditComment = (commentId) => {
   return { type: START_EDIT_COMMENT, commentId };
+}
+
+export const cancelEditComment = () => {
+  return { type: CANCEL_EDIT_COMMENT };
 }
 
 export const createComment = (articleId, userId, content) => {

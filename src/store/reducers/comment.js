@@ -2,6 +2,7 @@ import {
   SUCCESS_STATE,
   SET_FAIL_STATE,
   START_EDIT_COMMENT,
+  CANCEL_EDIT_COMMENT,
 } from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
@@ -33,6 +34,14 @@ const startEditComment = (state, action) => {
   })
 }
 
+const setCancelEdit = (state = initialState, action) => {
+  return updateObject(state, {
+    enableCommentEditing: false,
+    editingId: null,
+    editableContent: '',
+  });
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SUCCESS_STATE:
@@ -41,6 +50,8 @@ const reducer = (state = initialState, action) => {
       return failState(state, action);
     case START_EDIT_COMMENT:
       return startEditComment(state, action);
+    case CANCEL_EDIT_COMMENT:
+      return setCancelEdit(state, action)
     default:
       return state;
   }

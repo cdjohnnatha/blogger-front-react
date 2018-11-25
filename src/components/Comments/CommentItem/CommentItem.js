@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, CardBody, CardText, Button, Input } from 'reactstrap';
 import moment from 'moment';
 import { connect } from "react-redux";
-import { startEditComment, destroyComment, updateComment } from '../../../store/actions/comment';
+import { startEditComment, destroyComment, updateComment, cancelEditComment } from '../../../store/actions/comment';
 import { updateObject, checkValidity } from "../../../shared/utility";
 
 class CommentItem extends Component {
@@ -77,6 +77,7 @@ class CommentItem extends Component {
             onChange={event => this.inputChangedHandler(event, 'content')}
           />
           <Button onClick={ event => this.updateHandler()} className="mr-2 mb-2" outline color="success">Update</Button>
+          <Button onClick={ event => this.props.onCancelEditComment()} className="mr-2 mb-2" outline color="">Cancel</Button>
         </CardBody>
       )
     }
@@ -104,7 +105,8 @@ const mapDispatchToProps = dispatch => {
   return {
     enableEditMode: (id) => dispatch(startEditComment(id)),
     onDestroyComment: (id) => dispatch(destroyComment(id)),
-    onUpdateComment: (id, articleId, content) => dispatch(updateComment(id, articleId, content))
+    onUpdateComment: (id, articleId, content) => dispatch(updateComment(id, articleId, content)),
+    onCancelEditComment: () => dispatch(cancelEditComment())
   };
 }
 
