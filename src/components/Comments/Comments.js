@@ -3,8 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from "react-redux";
 import { listArticleComments } from '../../store/actions/articles';
-// import CommentItem from '../Comments/CommentItem/CommentItem';
-
+import CommentItem from '../Comments/CommentItem/CommentItem';
 
 class Comments extends Component {
 
@@ -15,8 +14,8 @@ class Comments extends Component {
 
   render() {
     return (
-      <div className="container-fluid d-flex flex-column align-items-start">
-        {this.props.commentList.map(element => <p>{element.attributes.content}</p>)}
+      <div className="d-flex flex-column">
+        {this.props.commentList.map((element, i) => <CommentItem attributes={element.attributes} key={i} />) }
       </div>
     );
   }

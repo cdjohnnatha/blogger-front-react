@@ -1,17 +1,16 @@
 import React from "react";
+import { Card, CardBody, CardText } from 'reactstrap';
+import moment from 'moment';
 
-const CommentItem = ({ comment }) => (
-  <div className="d-flex flex-column align-items-start">
-    <span className="align-self-start">
-      {comment.content}
-    </span>
-    <small className="align-self-end">
-      {comment.lastUpdate}
-    </small>
-    {/* <span>
-    {comment.user}
-    </span> */}
-  </div>
+const CommentItem = props => (
+  <Card className='card__styles mb-2 mr-2 d-flex'>
+    <CardBody className="card__body_style">
+      <CardText>{props.attributes['content']}</CardText>
+    </CardBody>
+    <CardText className="align-self-end">
+      <small className="text-muted">Last updated - {moment(props.attributes['updated-at']).format("MMMM Do, YYYY")}</small>
+    </CardText>
+  </Card>
 );
 
 export default CommentItem;

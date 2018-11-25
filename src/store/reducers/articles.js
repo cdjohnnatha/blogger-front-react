@@ -1,9 +1,9 @@
 import { INDEX_ARTICLE,
-  UPDATE_ARTICLE,
-  DESTROY_ARTICLE,
-  ARTICLE_GET_SUCCESS,
+  SHOW_ARTICLE,
+  SUCCESS_STATE,
   SET_ARTICLE_COMMENTS,
   SET_ARTICLE_LIST,
+  ARTICLE_FAIL,
 } from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
@@ -15,13 +15,14 @@ const initialState = {
   userId: null,
   comments: [],
   error: null,
-  success: false
+  success: false,
+  redirectPath: '/',
+  loading: false
 }
 
 const index = (state, action) => {
   return updateObject(state, { list: action.articleList });
 }
-
 
 const show = (state, action) => {
   return updateObject(state, {
@@ -32,18 +33,17 @@ const show = (state, action) => {
   });
 }
 
-const update = (state, action) => {
-  // return updateObject(state, { error: null, loading: true });
-}
-
-const destroy = (state, action) => {
-  // return updateObject(state, { error: null, loading: true });
+const isSuccess = (state, action) => {
+  return updateObject(state, { success: true, loading: true });
 }
 
 const articleComments = (state, action) => {
   return updateObject(state, { comments: action.comments });
 }
 
+const failState = (state, action) => {
+  return updateObject(state, { error: action.error });
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -51,14 +51,14 @@ const reducer = (state = initialState, action) => {
       return index(state, action);
     case SET_ARTICLE_LIST:
       return index(state, action);
-    case UPDATE_ARTICLE:
-      return update(state, action);
-    case DESTROY_ARTICLE:
-      return destroy(state, action);
-    case ARTICLE_GET_SUCCESS:
+    case SUCCESS_STATE:
+      return isSuccess(state, action);
+    case SHOW_ARTICLE:
       return show(state, action);
     case SET_ARTICLE_COMMENTS:
       return articleComments(state, action);
+    case ARTICLE_FAIL:
+      return failState(state, action);
     default:
       return state;
   }

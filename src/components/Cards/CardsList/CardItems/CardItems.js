@@ -12,11 +12,11 @@ const CardItems = props => {
     <li className="d-flex card align-items-center flex-row mt-2 mb-1 ml-2 mr-2 nav-item">
       <Link to={`/articles/${props.item.id}`}>
 
-        <img src={img_data} alt="..." className="rounded float-left secondary__image" />
+        <img src={img_data} alt="..." className="rounded float-left secondary__image mr-2" />
         <div className="d-flex align-items-start flex-column secondary__news__content justify-content-start">
-          <div className="font-weight-bold">{attributes.title}</div>
-          <div class="overflow-content-card">{attributes.content}</div>
-          <div className="text-secondary">
+          <p className="font-weight-bold">{attributes.title}</p>
+          <p className="text-truncate">{attributes.content}</p>
+          <div className="text-secondary align-self-end">
             <small>
               <FontAwesomeIcon icon={faCalendarAlt} />
               {moment(attributes['updated-at']).format("MMMM Do, YYYY")}

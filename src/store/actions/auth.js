@@ -95,18 +95,18 @@ export const authCheckState = () => {
     if (!token) {
       dispatch(logout());
     } else {
-      const expirationTime = new Date(localStorage.getItem('expiry'));
-      if (expirationTime <= new Date()) {
-        dispatch(logout());
-      } else {
+      // const expirationTime = new Date(localStorage.getItem('expiry'));
+      // if (expirationTime <= new Date()) {
+      //   dispatch(logout());
+      // } else {
         const tokenType = localStorage.getItem('tokenType');
         const accessToken = localStorage.getItem('accessToken');
         const uid = localStorage.getItem('uid');
         const client = localStorage.getItem('client');
         const userId = localStorage.getItem('userId');
         dispatch(authSuccess(tokenType, accessToken, uid, client, userId));
-        dispatch(checkAuthTimeout((expirationTime.getTime() - new Date().getTime()) / 1000));
-      }
+        // dispatch(checkAuthTimeout((expirationTime.getTime() - new Date().getTime()) / 1000));
+      // }
     }
   };
 };

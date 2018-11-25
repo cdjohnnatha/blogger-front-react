@@ -6,28 +6,37 @@ import Layout from "./components/Layout/Layout";
 import Auth from './containers/Auth/Auth';
 import Signup from './containers/Auth/Signup/Signup';
 import Index from './components/Index/Index';
-import ArticleForm from './components/Articles/ArticleForm';
+import ArticleList from './components/Articles/ArticlesList/ArticlesList';
 import ArticleShow from './components/Articles/ArticleShow';
+import ArticleActions from './components/Articles/ArticleActions';
 import { connect } from "react-redux";
+import { authCheckState } from './store/actions/auth'
+// import PublicRoutes from './routes/PublicRoutes';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.onTryAutoSignup();
+  }
+
   render() {
-    let routes = (
+    let routes =
       <Switch>
         <Route path="/" exact component={Index} />
         <Route path="/login" component={Auth} />
         <Route path="/sign_up" component={Signup} />
-        <Route path="/articles/:id" component={ArticleShow} />
-        <Route path="/articles" component={ArticleForm} />
+        <Route path="/articles/:id/show" component={ArticleShow} />
+        <Route path="/articles/:id/edit" component={ArticleActions} />
+        <Route path="/articles/:id/new" component={ArticleActions} />
+        <Route path="/articles" component={ArticleList} />
       </Switch>
-    );
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
           <Route path="/" exact component={Index} />
-          <Route path="/Perfil" component={ArticleForm} />
-          <Route path="/articles" component={ArticleForm} />
-          <Redirect to="/" />
+          <Route path="/articles/:id/show" component={ArticleShow} />
+          <Route path="/articles/:id/edit" component={ArticleActions} />
+          <Route path="/articles/:id/new" component={ArticleActions} />
+          <Route path="/articles" component={ArticleList} />
         </Switch>
       );
     }
@@ -43,8 +52,15 @@ class App extends Component {
 const mapStateToProps = state => {
   console.log(state);
   return {
-    isAuthenticated: state.auth.client !== null
+    isAuthenticated: state.auth.client !== null,
   };
 };
 
-export default withRouter(connect(mapStateToProps)(App));
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch(authCheckState())
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

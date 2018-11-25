@@ -1,16 +1,12 @@
-import { INDEX_ARTICLE,
-  CREATE_ARTICLE,
-  UPDATE_ARTICLE,
-  DESTROY_ARTICLE,
-  ARTICLE_GET_SUCCESS,
+import {
+  SHOW_ARTICLE,
   ARTICLE_FAIL,
   SUCCESS_STATE,
   SET_ARTICLE_COMMENTS,
-  SET_ARTICLE_LIST
+  SET_ARTICLE_LIST,
+  SET_ARTICLE_REDIRECT,
 } from "../actions/actionTypes";
-import { updateObject } from "../../shared/utility";
 import axios from 'axios';
-import { Deserializer } from 'jsonapi-serializer';
 const baseUrl = 'http://localhost:3001'
 
 export const articleFail = (error) => {
@@ -22,7 +18,7 @@ export const setSuccessState = (success) => {
 }
 
 export const articleSuccess = (id, title, content, lastUpdate, userId) => {
-  return { type: ARTICLE_GET_SUCCESS, id, title, content, lastUpdate, userId }
+  return { type: SHOW_ARTICLE, id, title, content, lastUpdate, userId }
 }
 
 export const articleComments = (comments) => {
@@ -32,6 +28,14 @@ export const articleComments = (comments) => {
 export const setArticleList = (articleList) => {
   return { type: SET_ARTICLE_LIST, articleList }
 }
+
+
+export const setArticleRedirectPath = (path) => {
+  return {
+    type: SET_ARTICLE_REDIRECT,
+    redirectPath: path
+  };
+};
 
 export const indexArticle = () => {
   return (dispatch, getState) => {
@@ -153,6 +157,69 @@ export const listArticleComments = (id) => {
         "userId": element.relationships.user.data.id
       }));
       dispatch(articleComments(comments))
+      dispatch(setSuccessState(true));
+    })
+    .catch(error => {
+      dispatch(articleFail(error.response.data.error));
+    })
+  }
+}
+
+export const destroyArticle = (id) => {
+  return dispatch => {
+    const tokenType = localStorage.getItem('tokenType');
+    const accessToken = localStorage.getItem('accessToken');
+    const uid = localStorage.getItem('uid');
+    const client = localStorage.getItem('client');
+    const url = `${baseUrl}/v1/articles/${id}`;
+    let headers = {
+      'Content-Type': 'application/vnd.api+json',
+      'Accept': 'application/vnd.api+json',
+      'token-type': tokenType,
+      'client': client,
+      'uid': uid,
+      'access-token': accessToken
+    }
+    axios.defaults.headers = headers;
+    axios.delete(url).then(response => {
+      dispatch(setArticleRedirectPath('/articles'))
+      dispatch(setSuccessState(true));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(articleFail(error.response.data.error));
+    });
+  }
+}
+
+export const updateArticle = (id, title, content) => {
+  return (dispatch, getState) => {
+    const { auth } = getState();
+    const articleData = {
+      data: {
+        "type": "articles",
+        "id": id,
+        "attributes": {
+          "title": title,
+          "content": content
+        },
+        "relationships": {
+          "user": {
+            "data": { "type": "users", "id": auth.userId }
+          }
+        }
+      }
+    }
+    const url = `${baseUrl}/v1/articles/${id}`;
+    axios.defaults.headers = {
+      'Content-Type': 'application/vnd.api+json',
+      'Accept': 'application/vnd.api+json',
+      'token-type': auth.tokenType,
+      'client': auth.client,
+      'uid': auth.uid,
+      'access-token': auth.accessToken
+    }
+    axios.put(url, articleData).then(response => {
       dispatch(setSuccessState(true));
     })
     .catch(error => {
