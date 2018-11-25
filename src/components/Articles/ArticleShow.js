@@ -36,6 +36,11 @@ class ArticleShow extends Component {
     this.props.onDestroy(this.props.match.params.id);
   }
 
+  onUpdateClick = () => {
+    console.log('isUpdating');
+    // this.props.onDestroy(this.props.match.params.id);
+  }
+
   onSetUpdate = () => {
     const controlName = 'redirectUpdate';
     const updatedControls = updateObject(this.state.controls, {
@@ -50,6 +55,7 @@ class ArticleShow extends Component {
   onSubmitHandler = (content) => {
     this.props.onCreateComment(this.props.match.params.id, this.props.userId, content);
   }
+
 
   render() {
     let articleRedirect = null;

@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { listArticleComments } from '../../store/actions/articles';
 import CommentItem from '../Comments/CommentItem/CommentItem';
-import { destroyComment } from '../../store/actions/comment';
 
 class Comments extends Component {
 
   componentDidMount() {
     const articleId = this.props.articleId;
     this.props.onCommentList(articleId);
-  }
-
-  onDestroyHandler = commentId => {
-    this.props.onDestroyComment(commentId);
   }
 
   render() {
@@ -25,9 +20,9 @@ class Comments extends Component {
           }
           return <CommentItem
               allowEditComment={editButtons}
-              attributes={element.attributes} key={i}
+              item={element}
+              key={i}
               commentId={element.id}
-              btnDestroyAction={this.onDestroyHandler}
             /> }
         ) }
       </div>
@@ -50,7 +45,6 @@ const mapStatToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onCommentList: (id) => dispatch(listArticleComments(id)),
-    onDestroyComment: (commentId) => dispatch(destroyComment(commentId))
   };
 }
 

@@ -1,6 +1,7 @@
 import {
   SUCCESS_STATE,
-  SET_FAIL_STATE
+  SET_FAIL_STATE,
+  START_EDIT_COMMENT
 } from "./actionTypes";
 import axios from 'axios';
 const baseUrl = 'http://localhost:3001'
@@ -13,11 +14,13 @@ export const setFailState = (error) => {
   return { type: SET_FAIL_STATE, error };
 };
 
+export const startEditComment = (commentId) => {
+  return { type: START_EDIT_COMMENT, commentId };
+}
+
 export const createComment = (articleId, userId, content) => {
   return (dispatch, getState) => {
     const { auth } = getState();
-    console.log(content);
-    console.log('>>>>>>>>>>');
     const commentData = {
       data: {
         "type": "comments",
@@ -34,7 +37,6 @@ export const createComment = (articleId, userId, content) => {
         }
       }
     }
-    console.log(commentData);
     const url = `${baseUrl}/v1/comments`;
     axios.defaults.headers = {
       'Content-Type': 'application/vnd.api+json',
@@ -112,9 +114,11 @@ export const updateComment = (id, articleId, content) => {
       'access-token': auth.accessToken
     }
     axios.put(url, articleData).then(response => {
+      console.log(response);
       dispatch(setSuccessState(true));
     })
     .catch(error => {
+      console.log(error);
       dispatch(setFailState(error.response.data.error));
     })
   }

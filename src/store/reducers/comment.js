@@ -1,13 +1,14 @@
 import {
   SUCCESS_STATE,
   SET_FAIL_STATE,
+  START_EDIT_COMMENT,
 } from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
 const initialState = {
-  content: null,
-  lastUpdate: null,
-  userId: null,
+  enableCommentEditing: false,
+  editingId: null,
+  editableContent: '',
   articleId: null,
   error: null,
   success: false,
@@ -24,12 +25,22 @@ const failState = (state, action) => {
   return updateObject(state, { error: action.error });
 }
 
+const startEditComment = (state, action) => {
+  return updateObject(state, {
+    enableCommentEditing: true,
+    editingId: action.commentId,
+    editableContent: action.editableContent
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SUCCESS_STATE:
       return isSuccess(state, action);
     case SET_FAIL_STATE:
-      return failState;
+      return failState(state, action);
+    case START_EDIT_COMMENT:
+      return startEditComment(state, action);
     default:
       return state;
   }
