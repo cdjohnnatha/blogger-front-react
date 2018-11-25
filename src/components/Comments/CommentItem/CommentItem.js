@@ -44,6 +44,7 @@ class CommentItem extends Component {
     let content = this.state.controls.content.value;
     if (content !== '' && this.props.item.attributes.content !== content) {
       this.props.onUpdateComment(this.props.item.id, this.props.item.articleId, content);
+      this.props.onCancelEditComment();
     }
   }
 
@@ -53,7 +54,7 @@ class CommentItem extends Component {
       editingButtons = (
         <div>
           <Button onClick={ event => this.editModeHandler(this.props.commentId) } className="mr-2 mb-2" outline color="warning">Edit</Button>
-          <Button onClick={ event => this.onDestroyHandler(this.props.commentId)}  className="mr-2 mb-2" outline color="danger">Delete</Button>
+          <Button onClick={ event => this.onDestroyHandler(this.props.commentId, this.props.item.articleId)}  className="mr-2 mb-2" outline color="danger">Delete</Button>
         </div>
         )
     }
@@ -104,7 +105,7 @@ const mapStatToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     enableEditMode: (id) => dispatch(startEditComment(id)),
-    onDestroyComment: (id) => dispatch(destroyComment(id)),
+    onDestroyComment: (id, articleId) => dispatch(destroyComment(id, articleId)),
     onUpdateComment: (id, articleId, content) => dispatch(updateComment(id, articleId, content)),
     onCancelEditComment: () => dispatch(cancelEditComment())
   };

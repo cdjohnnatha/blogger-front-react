@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Form, FormGroup, Button, Row, Col, Label, Input, Alert  } from 'reactstrap';
-import { updateObject, checkValidity } from "../../shared/utility";
 import { connect } from "react-redux";
 import { createArticle, updateArticle, showArticle } from "../../store/actions/articles";
 import ArticleForm from './ArticleForm'
+import { Redirect } from "react-router-dom";
 
 class ArticlesActions extends Component {
   state = {
@@ -22,7 +21,6 @@ class ArticlesActions extends Component {
 
   onSubmitHandler = (title, content) => {
     if (this.props.match.url.includes('/edit')) {
-      console.log('updating');
       this.props.onUpdate(
         this.props.match.params.id,
         title,
@@ -48,6 +46,10 @@ class ArticlesActions extends Component {
           item={this.props.articleObject}
           onSubmitHandler={this.onSubmitHandler}
           btnName={btnName}
+          btnColor="success"
+          enableUpdate={true}
+          history={this.props.history}
+          articleId={this.props.match.params.id}
           />
       }
     } else {
@@ -55,7 +57,11 @@ class ArticlesActions extends Component {
         item={this.props.articleObject}
         onSubmitHandler={this.onSubmitHandler}
         btnName={btnName}
+        btnColor="default"
       />;
+    }
+    if (this.props.isRedirect) {
+      return <Redirect to={this.props.redirectPath} />
     }
     return (
       <div className="container">
@@ -71,6 +77,8 @@ const mapStatToProps = state => {
     error: state.articles.error,
     isSuccess: state.articles.success,
     articleObject: state.articles,
+    isRedirect: state.articles.redirectPath !== '/',
+    redirectPath: state.articles.redirectPath
   };
 }
 

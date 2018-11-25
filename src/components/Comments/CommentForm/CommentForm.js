@@ -33,6 +33,10 @@ class CommentForm extends Component {
   submitHandler = event => {
     event.preventDefault();
     this.props.onSubmitHandler(this.state.controls.content.value);
+    const updatedControls = updateObject(this.state.controls, {
+      ['content']: updateObject(this.state.controls['content'], { value: '' })
+    });
+    this.setState({ controls: updatedControls })
   }
 
   render() {

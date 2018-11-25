@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Input, Card, Button, CardBody, CardTitle, Form } from 'reactstrap';
+import { Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from "react-redux";
@@ -10,8 +10,9 @@ import moment from "moment";
 import Comment from '../Comments/Comments'
 import SetupButtons from '../SetupButtons/SetupButtons';
 import { Redirect } from 'react-router-dom';
-import { updateObject, checkValidity } from "../../shared/utility";
+import { updateObject } from "../../shared/utility";
 import CommentForm from '../Comments/CommentForm/CommentForm';
+import { listArticleComments } from '../../store/actions/articles';
 
 class ArticleShow extends Component {
   state = {
@@ -36,11 +37,6 @@ class ArticleShow extends Component {
     this.props.onDestroy(this.props.match.params.id);
   }
 
-  onUpdateClick = () => {
-    console.log('isUpdating');
-    // this.props.onDestroy(this.props.match.params.id);
-  }
-
   onSetUpdate = () => {
     const controlName = 'redirectUpdate';
     const updatedControls = updateObject(this.state.controls, {
@@ -58,12 +54,8 @@ class ArticleShow extends Component {
 
 
   render() {
-    let articleRedirect = null;
     let optionButtons = null;
     let newComment = null;
-    if (this.props.isSuccess) {
-      articleRedirect = <Redirect to={this.props.redirectPath} />
-    }
     if (this.props.isAuthenticated && (parseInt(this.props.articleUserId) === parseInt(this.props.userId))) {
       optionButtons = <SetupButtons
         elementId={this.props.match.params.id}
@@ -81,9 +73,12 @@ class ArticleShow extends Component {
     if (this.state.controls.redirectUpdate.value) {
       return <Redirect to={`/articles/${this.props.match.params.id}/edit`} />
     }
+    if (this.props.isRedirect) {
+      return <Redirect to={this.props.redirectPath} />
+    }
     return (
       <div className="d-flex align-items-start ml-2 mb-2">
-        <div className="d-flex flex-column ">
+        <div className="d-flex flex-column " id="articleContentContainer">
           <div>
             <h1 className="ml-5 mt-2">{this.props.articleObject.title}</h1>
             <Row>
@@ -125,10 +120,13 @@ const mapStatToProps = state => {
     error: state.articles.error,
     articleObject: state.articles,
     articleUserId: state.articles.userId,
-    isSuccess: state.success,
+    isSuccess: state.comment.success,
     isAuthenticated: state.auth.client ? true : false,
     userId: state.auth.userId ? state.auth.userId : false,
     commentObject: null,
+    commentCrated: state.comment.success,
+    isRedirect: state.articles.redirectPath !== '/',
+    redirectPath: state.articles.redirectPath,
   };
 }
 
@@ -136,7 +134,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onShow: (id) => dispatch(showArticle(id)),
     onDestroy: (id) => dispatch(destroyArticle(id)),
-    onCreateComment: (articleId, userId, content) => dispatch(createComment(articleId, userId, content))
+    onCreateComment: (articleId, userId, content) => dispatch(createComment(articleId, userId, content)),
+    onUpdateComments: (articleId) => dispatch(listArticleComments(articleId))
   };
 }
 

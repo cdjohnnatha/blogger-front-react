@@ -12,3 +12,7 @@
   height: 25em;
   /* width: 44em; */
 }
+
+#articleContentContainer {
+  margin-right: auto;
+}

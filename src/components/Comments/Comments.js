@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { listArticleComments } from '../../store/actions/articles';
+import { setReloadList } from '../../store/actions/comment';
 import CommentItem from '../Comments/CommentItem/CommentItem';
 
 class Comments extends Component {
 
   componentDidMount() {
-    const articleId = this.props.articleId;
-    this.props.onCommentList(articleId);
+    this.props.onCommentList(this.props.articleId);
+  }
+
+  componentDidUpdate() {
+    if (this.props.isReloadCommentList) {
+      this.props.onCommentList(this.props.articleId);
+      this.props.onReloadComments(false, false);
+    }
   }
 
   render() {
     let editButtons = null;
+
     return (
       <div className="d-flex flex-column">
         {this.props.commentList.map((element, i) => {
@@ -39,12 +47,15 @@ const mapStatToProps = state => {
     isAuthenticated: state.auth.client ? true : false,
     userId: state.auth.userId ? state.auth.userId : null,
     articleUserId: state.articles.userId,
+    isSuccess: state.comment.success,
+    isReloadCommentList: state.comment.reloadList
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     onCommentList: (id) => dispatch(listArticleComments(id)),
+    onReloadComments: (state, loading) => dispatch(setReloadList(state, loading))
   };
 }
 

@@ -2,9 +2,11 @@ import {
   SUCCESS_STATE,
   SET_FAIL_STATE,
   START_EDIT_COMMENT,
-  CANCEL_EDIT_COMMENT
+  CANCEL_EDIT_COMMENT,
+  SET_RELOAD_LIST
 } from "./actionTypes";
 import axios from 'axios';
+import { listArticleComments } from './articles';
 const baseUrl = 'http://localhost:3001'
 
 export const setSuccessState = (success) => {
@@ -23,8 +25,13 @@ export const cancelEditComment = () => {
   return { type: CANCEL_EDIT_COMMENT };
 }
 
+export const setReloadList = (state, loading) => {
+  return { type: SET_RELOAD_LIST, state, loading };
+}
+
 export const createComment = (articleId, userId, content) => {
   return (dispatch, getState) => {
+    dispatch(setSuccessState(false));
     const { auth } = getState();
     const commentData = {
       data: {
@@ -53,17 +60,16 @@ export const createComment = (articleId, userId, content) => {
     }
     axios.post(url, commentData).then(response => {
       dispatch(setSuccessState(true));
+      dispatch(setReloadList(true, false));
     })
     .catch(error => {
-      console.log(error.response.data);
       dispatch(setFailState(error.response.data.error));
     })
   }
 }
 
-export const destroyComment = (id) => {
+export const destroyComment = (id, articleId) => {
   return dispatch => {
-    console.log('destroying');
     const tokenType = localStorage.getItem('tokenType');
     const accessToken = localStorage.getItem('accessToken');
     const uid = localStorage.getItem('uid');
@@ -81,9 +87,9 @@ export const destroyComment = (id) => {
     axios.delete(url).then(response => {
       // dispatch(setRedirectPath('/articles'))
       dispatch(setSuccessState(true));
+      dispatch(setReloadList(true, false));
     })
     .catch(error => {
-      console.log(error);
       dispatch(setFailState(error.response.data.error));
     });
   }
@@ -119,11 +125,10 @@ export const updateComment = (id, articleId, content) => {
       'access-token': auth.accessToken
     }
     axios.put(url, articleData).then(response => {
-      console.log(response);
       dispatch(setSuccessState(true));
+      dispatch(setReloadList(true));
     })
     .catch(error => {
-      console.log(error);
       dispatch(setFailState(error.response.data.error));
     })
   }

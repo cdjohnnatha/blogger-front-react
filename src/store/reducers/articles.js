@@ -4,6 +4,7 @@ import { INDEX_ARTICLE,
   SET_ARTICLE_COMMENTS,
   SET_ARTICLE_LIST,
   ARTICLE_FAIL,
+  SET_REDIRECT_PATH,
 } from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
@@ -45,6 +46,10 @@ const failState = (state, action) => {
   return updateObject(state, { error: action.error });
 }
 
+const setRedirectPath = (state, action) => {
+  return updateObject(state, { redirectPath: action.redirectPath });
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case INDEX_ARTICLE:
@@ -59,6 +64,8 @@ const reducer = (state = initialState, action) => {
       return articleComments(state, action);
     case ARTICLE_FAIL:
       return failState(state, action);
+    case SET_REDIRECT_PATH:
+      return setRedirectPath(state, action)
     default:
       return state;
   }

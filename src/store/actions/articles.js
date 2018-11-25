@@ -4,7 +4,7 @@ import {
   SUCCESS_STATE,
   SET_ARTICLE_COMMENTS,
   SET_ARTICLE_LIST,
-  SET_ARTICLE_REDIRECT,
+  SET_REDIRECT_PATH,
 } from "../actions/actionTypes";
 import axios from 'axios';
 const baseUrl = 'http://localhost:3001'
@@ -30,9 +30,9 @@ export const setArticleList = (articleList) => {
 }
 
 
-export const setArticleRedirectPath = (path) => {
+export const setRedirectPath = (path) => {
   return {
-    type: SET_ARTICLE_REDIRECT,
+    type: SET_REDIRECT_PATH,
     redirectPath: path
   };
 };
@@ -151,7 +151,7 @@ export const listArticleComments = (id) => {
     axios.defaults.headers = headers;
     axios.get(url).then(response => {
       const { data: { data: dataObj } } = response;
-      const comments = dataObj.map(element => ({
+      const comments = dataObj.slice(0).reverse().map(element => ({
         "id": element.id,
         "attributes": element.attributes,
         "userId": element.relationships.user.data.id,
@@ -183,11 +183,10 @@ export const destroyArticle = (id) => {
     }
     axios.defaults.headers = headers;
     axios.delete(url).then(response => {
-      dispatch(setArticleRedirectPath('/articles'))
+      dispatch(setRedirectPath('/articles'))
       dispatch(setSuccessState(true));
     })
     .catch(error => {
-      console.log(error);
       dispatch(articleFail(error.response.data.error));
     });
   }
@@ -222,6 +221,7 @@ export const updateArticle = (id, title, content) => {
     }
     axios.put(url, articleData).then(response => {
       dispatch(setSuccessState(true));
+      dispatch(setRedirectPath(`/articles/${id}/show`));
     })
     .catch(error => {
       dispatch(articleFail(error.response.data.error));

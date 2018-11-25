@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Button, Row, Col, Label, Input, Alert  } from 'reactstrap';
 import { updateObject, checkValidity } from "../../shared/utility";
-import { connect } from "react-redux";
-import { showArticle, updateArticle, createArticle } from "../../store/actions/articles";
 
 class ArticlesForm extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       controls: {
         title: {
@@ -42,12 +39,15 @@ class ArticlesForm extends Component {
 
   submitHandler = event => {
     event.preventDefault();
-    console.log('this.state.controls.title.value');
     this.props.onSubmitHandler(this.state.controls.title.value, this.state.controls.content.value);
   }
 
 
   render() {
+    let cancelEditBtn = null;
+    if (this.props.enableUpdate) {
+      cancelEditBtn = <Button onClick={() => this.props.history.goBack()} outline color="default" className="ml-2">Cancel</Button>
+    }
     return (
       <Form onSubmit={this.submitHandler}>
         <Row>
@@ -80,30 +80,12 @@ class ArticlesForm extends Component {
             </FormGroup>
           </Col>
         </Row>
-        <Button disabled={!this.state.formIsValid}>{this.props.btnName}</Button>
+        <Button color={this.props.btnColor} disabled={!this.state.formIsValid}>{this.props.btnName}</Button>
+        {cancelEditBtn}
       </Form>
     );
   }
 }
 
-const mapStatToProps = state => {
-  return {
-    loading: state.articles.loading,
-    error: state.articles.error,
-    articleObject: state.articles,
-    articleUserId: state.articles.userId,
-    isSuccess: state.success,
-    isAuthenticated: state.auth.client ? true : false,
-    userId: state.auth.userId ? state.auth.userId : false,
-  };
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onShow: (id) => dispatch(showArticle(id)),
-    onUpdate: (id) => dispatch(updateArticle(id)),
-    onCreate: (id) => dispatch(createArticle(id)),
-  };
-}
 
 export default ArticlesForm;
