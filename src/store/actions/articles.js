@@ -154,7 +154,8 @@ export const listArticleComments = (id) => {
       const comments = dataObj.map(element => ({
         "id": element.id,
         "attributes": element.attributes,
-        "userId": element.relationships.user.data.id
+        "userId": element.relationships.user.data.id,
+        "articleId": element.relationships.article.data.id
       }));
       dispatch(articleComments(comments))
       dispatch(setSuccessState(true));

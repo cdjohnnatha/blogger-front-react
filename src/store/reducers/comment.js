@@ -1,0 +1,38 @@
+import {
+  SUCCESS_STATE,
+  SET_FAIL_STATE,
+} from "../actions/actionTypes";
+import { updateObject } from "../../shared/utility";
+
+const initialState = {
+  content: null,
+  lastUpdate: null,
+  userId: null,
+  articleId: null,
+  error: null,
+  success: false,
+  redirectPath: '/',
+  loading: false
+}
+
+
+const isSuccess = (state, action) => {
+  return updateObject(state, { success: true, loading: true });
+}
+
+const failState = (state, action) => {
+  return updateObject(state, { error: action.error });
+}
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SUCCESS_STATE:
+      return isSuccess(state, action);
+    case SET_FAIL_STATE:
+      return failState;
+    default:
+      return state;
+  }
+}
+
+export default reducer;

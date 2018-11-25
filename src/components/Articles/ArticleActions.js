@@ -41,10 +41,6 @@ class ArticlesActions extends Component {
   render() {
     let btnName = 'Save';
     let form = null;
-    // if (this.props.error) {
-    //   let errors = this.props.error;
-    //   errorMessage = <ul>{Object.keys(errors).map(key => <li>{ `${key} - ${errors[key].join(', ')}`}</li>)}</ul>
-    // }
     if(this.props.match.url.includes('/edit')) {
       if (this.props.articleObject.title) {
           btnName = 'Update';

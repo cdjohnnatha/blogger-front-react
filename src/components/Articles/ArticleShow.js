@@ -4,19 +4,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from "react-redux";
 import { showArticle, destroyArticle } from '../../store/actions/articles';
+import { createComment } from '../../store/actions/comment';
 import './Article.css';
 import moment from "moment";
 import Comment from '../Comments/Comments'
 import SetupButtons from '../SetupButtons/SetupButtons';
 import { Redirect } from 'react-router-dom';
 import { updateObject, checkValidity } from "../../shared/utility";
+import CommentForm from '../Comments/CommentForm/CommentForm';
 
 class ArticleShow extends Component {
   state = {
     controls: {
       redirectUpdate: {
         value: false
-      }
+      },
+      content: {
+        value: '',
+        valid: false,
+        validation: {
+          required: true,
+        },
+      },
     }
   }
   componentDidMount() {
@@ -38,16 +47,14 @@ class ArticleShow extends Component {
     this.setState({ controls: updatedControls })
   }
 
-  submitHandler = event => {
-    event.preventDefault();
-    console.log('this.state.controls.title.value');
-    // this.props.onSubmitHandler(this.state.controls.title.value, this.state.controls.content.value);
+  onSubmitHandler = (content) => {
+    this.props.onCreateComment(this.props.match.params.id, this.props.userId, content);
   }
-
 
   render() {
     let articleRedirect = null;
     let optionButtons = null;
+    let newComment = null;
     if (this.props.isSuccess) {
       articleRedirect = <Redirect to={this.props.redirectPath} />
     }
@@ -56,6 +63,14 @@ class ArticleShow extends Component {
         elementId={this.props.match.params.id}
         destroyAction={this.onDestroyClick}
         updateAction={this.onSetUpdate} />
+        newComment = (
+          <div className="mb-2 card__styles">
+            <CommentForm
+              onSubmitHandler={this.onSubmitHandler}
+              item={this.props.commentObject}
+              />
+          </div>
+        );
     }
     if (this.state.controls.redirectUpdate.value) {
       return <Redirect to={`/articles/${this.props.match.params.id}/edit`} />
@@ -89,17 +104,7 @@ class ArticleShow extends Component {
         <div className="align-self-center ml-2 mt-3">
           <h4>Comments</h4>
           <div className="comments-overflow">
-            <div className="mb-2 card__styles">
-              <Form onSubmit={this.submitHandler}>
-                <Card>
-                  <CardBody className="card__body_style">
-                    <CardTitle>Leave a comment</CardTitle>
-                    <Input type="textarea"></Input>
-                    <Button id="destroyBtn" className="mt-2 pt-2" outline color="info">Comment</Button>
-                  </CardBody>
-                </Card>
-              </Form>
-            </div>
+            {newComment}
             <Comment articleId={this.props.match.params.id}></Comment>
           </div>
         </div>
@@ -117,6 +122,7 @@ const mapStatToProps = state => {
     isSuccess: state.success,
     isAuthenticated: state.auth.client ? true : false,
     userId: state.auth.userId ? state.auth.userId : false,
+    commentObject: null,
   };
 }
 
@@ -124,6 +130,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onShow: (id) => dispatch(showArticle(id)),
     onDestroy: (id) => dispatch(destroyArticle(id)),
+    onCreateComment: (articleId, userId, content) => dispatch(createComment(articleId, userId, content))
   };
 }
 

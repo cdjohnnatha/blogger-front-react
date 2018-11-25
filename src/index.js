@@ -13,13 +13,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import authReducer from "./store/reducers/auth";
 import signUpReducer from "./store/reducers/signup";
 import articlesReducer from "./store/reducers/articles";
+import commentReducer from "./store/reducers/comment";
 
 
 
 const rootReducer = combineReducers({
   auth: authReducer,
   signup: signUpReducer,
-  articles: articlesReducer
+  articles: articlesReducer,
+  comment: commentReducer,
 });
 
 const store = createStore(
