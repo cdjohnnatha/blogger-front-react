@@ -54,30 +54,31 @@ export const createComment = (articleId, userId, content) => {
   }
 }
 
-export const destroycomment = (id) => {
+export const destroyComment = (id) => {
   return dispatch => {
-    // const tokenType = localStorage.getItem('tokenType');
-    // const accessToken = localStorage.getItem('accessToken');
-    // const uid = localStorage.getItem('uid');
-    // const client = localStorage.getItem('client');
-    // const url = `${baseUrl}/v1/articles/${id}`;
-    // let headers = {
-    //   'Content-Type': 'application/vnd.api+json',
-    //   'Accept': 'application/vnd.api+json',
-    //   'token-type': tokenType,
-    //   'client': client,
-    //   'uid': uid,
-    //   'access-token': accessToken
-    // }
-    // axios.defaults.headers = headers;
-    // axios.delete(url).then(response => {
-    //   dispatch(setArticleRedirectPath('/articles'))
-    //   dispatch(setSuccessState(true));
-    // })
-    // .catch(error => {
-    //   console.log(error);
-    //   dispatch(articleFail(error.response.data.error));
-    // });
+    console.log('destroying');
+    const tokenType = localStorage.getItem('tokenType');
+    const accessToken = localStorage.getItem('accessToken');
+    const uid = localStorage.getItem('uid');
+    const client = localStorage.getItem('client');
+    const url = `${baseUrl}/v1/comments/${id}`;
+    let headers = {
+      'Content-Type': 'application/vnd.api+json',
+      'Accept': 'application/vnd.api+json',
+      'token-type': tokenType,
+      'client': client,
+      'uid': uid,
+      'access-token': accessToken
+    }
+    axios.defaults.headers = headers;
+    axios.delete(url).then(response => {
+      // dispatch(setRedirectPath('/articles'))
+      dispatch(setSuccessState(true));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(setFailState(error.response.data.error));
+    });
   }
 }
 
