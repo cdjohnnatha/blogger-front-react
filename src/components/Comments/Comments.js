@@ -19,10 +19,10 @@ class Comments extends Component {
 
   render() {
     let editButtons = null;
-
-    return (
-      <div className="d-flex flex-column">
-        {this.props.commentList.map((element, i) => {
+    let commentList = null;
+    if (this.props.commentList.length > 0) {
+      commentList = (
+        this.props.commentList.map((element, i) => {
           if (element.userId === this.props.userId) {
             editButtons = true;
           }
@@ -32,7 +32,13 @@ class Comments extends Component {
               key={i}
               commentId={element.id}
             /> }
-        ) }
+        )
+      )
+    }
+
+    return (
+      <div className="d-flex flex-column">
+        {commentList}
       </div>
     );
   }

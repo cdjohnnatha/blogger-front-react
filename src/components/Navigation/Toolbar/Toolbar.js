@@ -21,15 +21,15 @@ const toolbar = props => (
         </div>
         {!props.isAuth
           ?
-          <Link className="navbar-text" to="/login/">
+          <a className="navbar-text" href="/login">
             <FontAwesomeIcon icon={faSignInAlt} />
             Login/Sign-up
-          </Link>
+          </a>
           :
-          <Link className="navbar-text" to="/logout/">
+          <a className="navbar-text" href="/logout/">
             <FontAwesomeIcon icon={faSignOutAlt} />
             Logout
-          </Link>
+          </a>
         }
     </nav>
   </header>

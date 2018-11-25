@@ -10,7 +10,7 @@ const CardItems = props => {
 
   return (
     <li className="d-flex card align-items-center flex-row mt-2 mb-1 ml-2 mr-2 nav-item">
-      <Link to={`/articles/${props.item.id}`}>
+      <Link to={`/articles/${props.item.id}/show`}>
 
         <img src={img_data} alt="..." className="rounded float-left secondary__image mr-2" />
         <div className="d-flex align-items-start flex-column secondary__news__content justify-content-start">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Form, FormGroup, Button } from 'reactstrap';
-import { auth, setAuthRedirectPath } from '../../store/actions/auth';
+import { auth, setRedirectPath } from '../../store/actions/auth';
 import { connect } from "react-redux";
 import { updateObject } from "../../shared/utility";
 import { Redirect } from 'react-router-dom';
@@ -19,8 +19,8 @@ class Auth extends Component {
     };
 
   componentDidMount() {
-    if (this.props.authRedirectPath !== '/login') {
-      this.props.onSetAuthRedirectPath();
+    if (this.props.redirectPath !== '/') {
+      this.props.onSetRedirectPath('/');
     }
   }
 
@@ -41,18 +41,17 @@ class Auth extends Component {
 
   render() {
     let errorMessage = null;
-    let authRedirect = null;
 
     if (this.props.error) {
       errorMessage = <p>{this.props.error.message}</p>
     }
+    console.log(this.props.redirectPath);
     if (this.props.isAthenticated) {
-      authRedirect = <Redirect to={this.props.authRedirectPath} />
+      return <Redirect to='/' />
     }
 
     return (
       <div className="container">
-        {authRedirect}
         {errorMessage}
         <Form className="border rounded" onSubmit={this.submitHandler}>
           <FormGroup>
@@ -96,14 +95,14 @@ const mapStatToProps = state => {
     loading: state.auth.loading,
     error: state.auth.error,
     isAthenticated: state.auth.client !== null,
-    authRedirectPath: state.auth.authRedirectPath
+    redirectPath: state.auth.redirectPath
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (email, password) => dispatch(auth(email, password)),
-    onSetAuthRedirectPath: () => dispatch(setAuthRedirectPath('/login'))
+    onSetRedirectPath: (path) => dispatch(setRedirectPath(path))
   };
 }
 

@@ -8,9 +8,9 @@ const navigationItems = props => (
     ?
     <ul className="navbar-nav  d-flex">
       <li className="nav-item">
-        <Link className="nav-link" to="/articles">
+        <a className="nav-link" href="/articles">
             Articles
-        </Link>
+        </a>
       </li>
     </ul>
     :

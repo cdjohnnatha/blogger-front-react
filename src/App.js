@@ -11,6 +11,7 @@ import ArticleShow from './components/Articles/ArticleShow';
 import ArticleActions from './components/Articles/ArticleActions';
 import { connect } from "react-redux";
 import { authCheckState } from './store/actions/auth'
+import Logout from './containers/Auth/Logout/Logout'
 // import PublicRoutes from './routes/PublicRoutes';
 import history from './history';
 
@@ -29,8 +30,6 @@ class App extends Component {
           <Route path="/login" component={Auth} />
           <Route path="/sign_up" component={Signup} />
           <Route path="/articles/:id/show" component={ArticleShow} />
-          <Route path="/articles/:id/edit" component={ArticleActions} />
-          <Route path="/articles/:id/new" component={ArticleActions} />
           <Route path="/articles" component={ArticleList} />
         </Switch>
       </Router>
@@ -39,6 +38,7 @@ class App extends Component {
         <Router history={history}>
           <Switch>
               <Route path="/" exact component={Index} />
+              <Route path="/logout" component={Logout} />
               <Route path="/articles/:id/show" component={ArticleShow} />
               <Route path="/articles/:id/edit" component={ArticleActions} />
               <Route path="/articles/:id/new" component={ArticleActions} />

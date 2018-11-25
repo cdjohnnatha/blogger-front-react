@@ -2,7 +2,8 @@ import { AUTH_START,
   AUTH_SUCCESS,
   AUTH_FAIL,
   AUTH_LOGOUT,
-  SET_AUTH_REDIRECT } from '../actions/actionTypes';
+  SET_REDIRECT_PATH
+} from '../actions/actionTypes';
 
 import axios from 'axios';
 const https = require('https');
@@ -26,13 +27,21 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
-  localStorage.removeItem('token-type');
-  localStorage.removeItem('access-token');
+  localStorage.removeItem('tokenType');
+  localStorage.removeItem('accessToken');
   localStorage.removeItem('uid');
   localStorage.removeItem('client');
   localStorage.removeItem('expiry');
   return { type: AUTH_LOGOUT }
 }
+
+export const setRedirectPath = (path) => {
+  console.log(path);
+  return {
+    type: SET_REDIRECT_PATH,
+    redirectPath: path
+  };
+};
 
 export const checkAuthTimeout = expirationTime => {
   return dispatch => {
@@ -74,20 +83,13 @@ export const auth = (email, password) => {
         localStorage.setItem('userId', userId);
         dispatch(authSuccess(tokenType, accessToken, uid, client, userId))
         dispatch(checkAuthTimeout(expiry));
+        dispatch(setRedirectPath('/'));
       })
       .catch(error => {
         dispatch(authFail(error.response.data.errors));
       })
   }
 }
-
-
-export const setAuthRedirectPath = (path) => {
-  return {
-    type: SET_AUTH_REDIRECT,
-    path: path
-  };
-};
 
 export const authCheckState = () => {
   return dispatch => {
