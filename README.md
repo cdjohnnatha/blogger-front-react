@@ -14,8 +14,8 @@ The intention to make a blog was changed to something similar as newspapper, pas
 - 4. [The Challenge](#TheChallenge)
   - 4.1. [Goal](#Goal)
 - 5. [Backend](#Backend)
-- 6. [Scratch](#Makefile)
-- 7. [Results](#Swagger)
+- 6. [Scratch](#Scratch)
+- 7. [Results](#Results)
 
 ## 1. <a name='Requirements'></a>Requirements
 - [yarn ](https://yarnpkg.com)
