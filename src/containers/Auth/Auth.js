@@ -45,16 +45,15 @@ class Auth extends Component {
     if (this.props.error) {
       errorMessage = <p>{this.props.error.message}</p>
     }
-    console.log(this.props.redirectPath);
     if (this.props.isAthenticated) {
       return <Redirect to='/' />
     }
 
     return (
-      <div className="container">
+      <div className="d-flex flex-column align-items-center">
         {errorMessage}
-        <Form className="border rounded" onSubmit={this.submitHandler}>
-          <FormGroup>
+        <Form className="border rounded col-sm-4 mt-4 p-3" onSubmit={this.submitHandler}>
+          <FormGroup className="">
             <label htmlFor="email">Email address</label>
             <input type="email"
             className="form-control required"
@@ -78,7 +77,7 @@ class Auth extends Component {
           </FormGroup>
           <Button>Submit</Button>
         </Form>
-        <div>
+        <div className="mb-4">
           <small>Don't have an account ?
             <Link className="navbar-text" to="/sign_up/">
               REGISTER HERE

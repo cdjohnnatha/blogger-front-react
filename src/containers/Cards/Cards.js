@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './CardNews.css'
-import LargeCard from './LargeCard/LargeCard'
-import SmallCardList from './CardsList/CardList';
+import LargeCard from '../../components/Cards/LargeCard/LargeCard'
+import SmallCardList from '../../components/Cards/CardsList/CardList';
 import { connect } from 'react-redux';
 import { indexArticle } from '../../store/actions/articles';
 

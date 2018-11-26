@@ -8,10 +8,10 @@ import { createComment } from '../../store/actions/comment';
 import './Article.css';
 import moment from "moment";
 import Comment from '../Comments/Comments'
-import SetupButtons from '../SetupButtons/SetupButtons';
+import SetupButtons from '../../components/SetupButtons/SetupButtons';
 import { Redirect } from 'react-router-dom';
 import { updateObject } from "../../shared/utility";
-import CommentForm from '../Comments/CommentForm/CommentForm';
+import CommentForm from '../../components/Comments/CommentForm/CommentForm';
 import { listArticleComments } from '../../store/actions/articles';
 
 class ArticleShow extends Component {
@@ -102,7 +102,7 @@ class ArticleShow extends Component {
             {optionButtons}
           </div>
         </div>
-        <div className="align-self-center ml-2 mt-3">
+        <div className="align-self-center ml-2 mt-3 mr-2">
           <h4>Comments</h4>
           <div className="comments-overflow">
             {newComment}

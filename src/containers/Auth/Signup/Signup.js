@@ -92,10 +92,10 @@ class Signup extends Component {
     }
 
     return (
-      <div className="container">
+      <div className="d-flex flex-column align-items-center mt-4">
         {signupRedirect}
         {errorMessage}
-        <Form className="border rounded" onSubmit={this.submitHandler}>
+        <Form className="border rounded col-sm-4 p-3" onSubmit={this.submitHandler}>
           <Row>
             <Col md={6}>
               <FormGroup>
@@ -174,7 +174,7 @@ class Signup extends Component {
           </Row>
           <Button disabled={!this.state.formIsValid}>Register</Button>
         </Form>
-        <div>
+        <div className="mb-3">
           <small>Have already an account ?
             <Link className="navbar-text" to="/login/">
               Login

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import moment from "moment";
+import './CardItems.css';
 
 const CardItems = props => {
   const { attributes } = props.item
@@ -15,7 +16,7 @@ const CardItems = props => {
         <img src={img_data} alt="..." className="rounded float-left secondary__image mr-2" />
         <div className="d-flex align-items-start flex-column secondary__news__content justify-content-start">
           <p className="font-weight-bold">{attributes.title}</p>
-          <p className="text-truncate">{attributes.content}</p>
+          <p className="text-truncate text-card-overflow ">{attributes.content}</p>
           <div className="text-secondary align-self-end">
             <small>
               <FontAwesomeIcon icon={faCalendarAlt} />

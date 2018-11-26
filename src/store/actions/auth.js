@@ -7,11 +7,7 @@ import { AUTH_START,
 
 import axios from 'axios';
 const https = require('https');
-
-// import enviromentPath from '../../../config/enviroments/env';
-// require('dotenv').config({ path: enviromentPath() });
-
-
+const baseUrl = process.env.REACT_APP_BACKEND_ADDRESS || 'http://localhost:3001';
 
 export const authStart = () => {
   return { type: AUTH_START }
@@ -61,7 +57,7 @@ export const auth = (email, password) => {
       returnSecureToken: true
     }
     // const url = `${process.env.API_URL}${process.env.AUTH_PATH}`;
-    const url = 'http://localhost:3001/auth/sign_in';
+    const url = `${baseUrl}/auth/sign_in`;
     const agent = new https.Agent({ rejectUnauthorized: false });
     axios.defaults.headers = {
       'Content-Type': 'application/json',
@@ -97,18 +93,12 @@ export const authCheckState = () => {
     if (!token) {
       dispatch(logout());
     } else {
-      // const expirationTime = new Date(localStorage.getItem('expiry'));
-      // if (expirationTime <= new Date()) {
-      //   dispatch(logout());
-      // } else {
         const tokenType = localStorage.getItem('tokenType');
         const accessToken = localStorage.getItem('accessToken');
         const uid = localStorage.getItem('uid');
         const client = localStorage.getItem('client');
         const userId = localStorage.getItem('userId');
         dispatch(authSuccess(tokenType, accessToken, uid, client, userId));
-        // dispatch(checkAuthTimeout((expirationTime.getTime() - new Date().getTime()) / 1000));
-      // }
     }
   };
 };

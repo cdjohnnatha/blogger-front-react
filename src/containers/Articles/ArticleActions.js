@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createArticle, updateArticle, showArticle } from "../../store/actions/articles";
-import ArticleForm from './ArticleForm'
+import ArticleForm from '../../components/Articles/ArticleForm'
 import { Redirect } from "react-router-dom";
 
 class ArticlesActions extends Component {

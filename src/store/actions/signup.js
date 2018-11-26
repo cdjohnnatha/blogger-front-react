@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SIGN_UP_FAIL, SET_SIGN_UP_REDIRECT, SUCCESS_STATE } from '../actions/actionTypes';
 const https = require('https');
+const baseUrl = process.env.REACT_APP_BACKEND_ADDRESS || 'http://localhost:3001'
 
 export const signupFail = (error) => {
   return { type: SIGN_UP_FAIL, error };
@@ -32,7 +33,7 @@ export const signup = (name, nickname, email, password, password_confirmation) =
       'Accept': 'application/vnd.api+json'
     }
     axios.defaults.httpAgent = agent;
-    const url = 'http://localhost:3001/auth';
+    const url = `${baseUrl}/auth`;
     axios.post(url, signupData)
       .then(response => {
         console.log(response);

@@ -1,3 +1,10 @@
-.overflow-content-card {
+/* .overflow-content-card {
   overflow-x: hidden;
+} */
+
+.text-card-overflow {
+  width: 30em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

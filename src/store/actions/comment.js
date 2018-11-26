@@ -6,8 +6,7 @@ import {
   SET_RELOAD_LIST
 } from "./actionTypes";
 import axios from 'axios';
-import { listArticleComments } from './articles';
-const baseUrl = 'http://localhost:3001'
+const baseUrl = process.env.REACT_APP_BACKEND_ADDRESS || 'http://localhost:3001';
 
 export const setSuccessState = (success) => {
   return { type: SUCCESS_STATE, success };

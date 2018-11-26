@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { listArticleComments } from '../../store/actions/articles';
 import { setReloadList } from '../../store/actions/comment';
-import CommentItem from '../Comments/CommentItem/CommentItem';
+import CommentItem from '../../components/Comments/CommentItem/CommentItem';
 
 class Comments extends Component {
 

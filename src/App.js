@@ -7,12 +7,11 @@ import Auth from './containers/Auth/Auth';
 import Signup from './containers/Auth/Signup/Signup';
 import Index from './components/Index/Index';
 import ArticleList from './components/Articles/ArticlesList/ArticlesList';
-import ArticleShow from './components/Articles/ArticleShow';
-import ArticleActions from './components/Articles/ArticleActions';
+import ArticleShow from './containers/Articles/ArticleShow';
+import ArticleActions from './containers/Articles/ArticleActions';
 import { connect } from "react-redux";
 import { authCheckState } from './store/actions/auth'
 import Logout from './containers/Auth/Logout/Logout'
-// import PublicRoutes from './routes/PublicRoutes';
 import history from './history';
 
 
@@ -57,7 +56,6 @@ class App extends Component {
 
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     isAuthenticated: state.auth.client !== null,
   };

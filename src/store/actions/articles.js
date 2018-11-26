@@ -7,7 +7,7 @@ import {
   SET_REDIRECT_PATH,
 } from "../actions/actionTypes";
 import axios from 'axios';
-const baseUrl = 'http://localhost:3001'
+let baseUrl = process.env.REACT_APP_BACKEND_ADDRESS || 'http://localhost:3001';
 
 export const articleFail = (error) => {
   return { type: ARTICLE_FAIL, error };

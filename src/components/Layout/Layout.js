@@ -9,7 +9,7 @@ class Layout extends Component {
     return (
       <div>
         <Toolbar isAuth={this.props.isAuthenticated} />
-          <main>{this.props.children}</main>
+          <main className="mb-4">{this.props.children}</main>
         <Footer />
       </div>
     );
