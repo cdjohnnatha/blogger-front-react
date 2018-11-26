@@ -2,7 +2,6 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-import { Link } from "react-router-dom";
 import './Toolbar.css';
 import NavigationItems from '../../Navigation/NavigationItems/NavigationItems';
 

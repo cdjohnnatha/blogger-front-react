@@ -3,7 +3,7 @@ import { Card, CardBody, CardText, Button, Input } from 'reactstrap';
 import moment from 'moment';
 import { connect } from "react-redux";
 import { startEditComment, destroyComment, updateComment, cancelEditComment } from '../../../store/actions/comment';
-import { updateObject, checkValidity } from "../../../shared/utility";
+import { updateObject } from "../../../shared/utility";
 
 class CommentItem extends Component {
   constructor(props) {

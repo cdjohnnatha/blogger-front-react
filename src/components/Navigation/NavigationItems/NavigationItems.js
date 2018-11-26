@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from "react-router-dom";
 
 const navigationItems = props => (
   <div className="collapse navbar-collapse" id="navbarNav">

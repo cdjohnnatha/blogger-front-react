@@ -4,9 +4,9 @@ import './index.css';
 import App from './App';
 import thunk from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
